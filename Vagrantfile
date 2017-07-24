@@ -19,6 +19,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.cache.scope = :box
   end
 
+  if Vagrant.has_plugin?("vagrant-saltdeps")
+    config.vm.provision :saltdeps do |deps|
+      deps.checkout_path =  "./.vagrant-salt/deps"
+      deps.deps_path     =  "./.vagrant-salt/saltdeps.yml"
+    end
+  end
+
   # Provision VM with this SaltStack formula, in masterless mode.
   config.vm.provision :salt do |salt|
     salt.minion_config = "./.vagrant-salt/minion"
