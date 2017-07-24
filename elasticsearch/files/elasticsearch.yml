@@ -1,5 +1,5 @@
 network.host: 0.0.0.0
-{% set unicast_hosts = salt['mine.get']('G@roles:metricsdb and G@roles:elasticsearch', 'network.ip_addrs', 'compound') %}
+{% set unicast_hosts = salt['mine.get']('G@appname:metricsdb and G@roles:elasticsearch', 'network.ip_addrs', 'compound') %}
 discovery.zen.ping.unicast.hosts: [ "{{ unicast_hosts|join('", "') }}" ]
 {% if unicast_hosts|length > 1 %}
 discovery.zen.minimum_master_nodes: {{ unicast_hosts|length - 1 }}
